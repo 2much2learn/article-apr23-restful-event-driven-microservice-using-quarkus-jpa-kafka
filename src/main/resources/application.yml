@@ -1,0 +1,62 @@
+quarkus:
+  # Datasource configuration
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: password
+    jdbc:
+      url: jdbc:postgresql://0.0.0.0:5432/cataloguedb
+      min-size: 5
+      max-size: 12
+
+  # Hibernate ORM configuration
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+
+  # Logging configuration
+  log:
+    level: INFO
+    console:
+      enable: true
+      format: "%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      level: DEBUG
+      color: false
+    category:
+      "org.hibernate":
+        level: WARN
+      "io.quarkus":
+        level: INFO
+
+# Kafka Messages
+# Configure the Kafka sink (we write to it)
+mp:
+  messaging:
+    outgoing:
+      price-updated:
+        connector: smallrye-kafka
+        topic: price-updated
+        value:
+          serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+    incoming:
+      product-purchased:
+        connector: smallrye-kafka
+        topic: product-purchased
+        value:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Custom Configurations
+file:
+  upload-location: E:\Projects\2much2learn\2much2learn_examples\catalogue-crud
+
+### Test Configuration ####
+"%test":
+  quarkus:
+    # Datasource configuration
+    datasource:
+      db-kind: postgresql
+      url: jdbc:tc:postgresql:latest:///cataloguedb
+    hibernate-orm:
+      dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      database:
+        generation: drop-and-create

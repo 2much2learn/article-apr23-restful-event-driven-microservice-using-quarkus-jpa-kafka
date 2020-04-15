@@ -1,0 +1,11 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+metadata:
+  name: crud-rest-api-using-quarkus-jpa
+build:
+  artifacts:
+  - image: narramadan/crud-catalog-quarkus
+deploy:
+  kubectl:
+    manifests:
+    - k8s-pod.yaml

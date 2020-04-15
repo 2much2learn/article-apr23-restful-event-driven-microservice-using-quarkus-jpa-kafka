@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crud-catalog-quarkus
+spec:
+  hostNetwork: true
+  containers:
+    - name: crud-catalog-quarkus
+      image: "narramadan/crud-catalog-quarkus"
