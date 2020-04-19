@@ -1,21 +1,5 @@
 [
   {
-    "name" : "com.toomuch2learn.crud.catalogue.model.ResourceIdentity",
-    "allDeclaredConstructors" : true,
-    "allPublicConstructors" : true,
-    "allDeclaredMethods" : true,
-    "allPublicMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicFields" : true
-  }, {
-    "name" : "com.toomuch2learn.crud.catalogue.model.CatalogueItemList",
-    "allDeclaredConstructors" : true,
-    "allPublicConstructors" : true,
-    "allDeclaredMethods" : true,
-    "allPublicMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicFields" : true
-  }, {
     "name" : "com.toomuch2learn.crud.catalogue.error.ErrorResponse",
     "allDeclaredConstructors" : true,
     "allPublicConstructors" : true,

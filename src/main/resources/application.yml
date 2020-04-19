@@ -1,11 +1,17 @@
 quarkus:
+
+  # load Custom Banner - Generated at http://patorjk.com/software/taag/#p=display&f=Slant&t=Catalogue%20CRUD
+  banner:
+    path: banner.txt
+
   # Datasource configuration
   datasource:
     db-kind: postgresql
     username: postgres
     password: password
     jdbc:
-      url: jdbc:postgresql://0.0.0.0:5432/cataloguedb
+      driver: io.opentracing.contrib.jdbc.TracingDriver
+      url: jdbc:tracing:postgresql://0.0.0.0:5432/cataloguedb
       min-size: 5
       max-size: 12
 
@@ -19,7 +25,7 @@ quarkus:
     level: INFO
     console:
       enable: true
-      format: "%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      format: "%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n"
       level: DEBUG
       color: false
     category:
@@ -27,6 +33,28 @@ quarkus:
         level: WARN
       "io.quarkus":
         level: INFO
+
+    # Send logs to Graylog
+    handler:
+      gelf:
+        enabled: true
+        host: localhost
+        port: 12201
+
+  jaeger:
+    service-name: catalogue-crud
+    sampler-type: const
+    sampler-param: 1
+
+  # configuration options that can affect how the native image is generated
+  native:
+    # The maximum Java heap to be used during the native image generation
+    native-image-xmx: 4g
+
+    # Additional arguments to pass to the build process
+    additional-build-args: >
+      -H:ResourceConfigurationFiles=resources-config.json,
+      -H:ReflectionConfigurationFiles=reflection-config.json
 
 # Kafka Messages
 # Configure the Kafka sink (we write to it)
@@ -44,10 +72,6 @@ mp:
         topic: product-purchased
         value:
           deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
-# Custom Configurations
-file:
-  upload-location: E:\Projects\2much2learn\2much2learn_examples\catalogue-crud
 
 ### Test Configuration ####
 "%test":

@@ -8,6 +8,7 @@ import com.toomuch2learn.crud.catalogue.error.Error;
 import com.toomuch2learn.crud.catalogue.model.CatalogueItem;
 import com.toomuch2learn.crud.catalogue.model.Category;
 import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.junit.DisabledOnNativeImage;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -28,6 +29,7 @@ import java.util.Random;
 
 @QuarkusTest
 @QuarkusTestResource(KafkaResource.class)
+@DisabledOnNativeImage
 public class RestAssuredCatalogueCRUDTest {
 
     @BeforeEach
