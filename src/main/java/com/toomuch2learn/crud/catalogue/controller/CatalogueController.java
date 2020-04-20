@@ -60,7 +60,7 @@ public class CatalogueController {
     public Response updateCatalogueItem(
         @PathParam(value = "sku") String skuNumber,
         @Valid CatalogueItem catalogueItem) throws ResourceNotFoundException, Exception {
-        log.info(String.format("Updating Catalogue Item with sku : %s", catalogueItem.getSku()));
+        log.info(String.format("=====> Updating Catalogue Item with sku : %s", catalogueItem.getSku()));
 
         catalogueCrudService.updateCatalogueItem(catalogueItem);
 

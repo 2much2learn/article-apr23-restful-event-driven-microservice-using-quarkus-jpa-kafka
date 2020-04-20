@@ -4,18 +4,24 @@ import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import org.testcontainers.containers.KafkaContainer;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-public class KafkaResource implements QuarkusTestResourceLifecycleManager {
+public class KafkaTestResource implements QuarkusTestResourceLifecycleManager {
 
     private final KafkaContainer KAFKA = new KafkaContainer();
 
     @Override
     public Map<String, String> start() {
-        KafkaContainer KAFKA = new KafkaContainer();
         KAFKA.start();
+
         System.setProperty("kafka.bootstrap.servers", KAFKA.getBootstrapServers());
-        return Collections.emptyMap();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("mp.messaging.outgoing.price-updated.bootstrap.servers", KAFKA.getBootstrapServers());
+        map.put("mp.messaging.incoming.product-purchased.bootstrap.servers", KAFKA.getBootstrapServers());
+
+        return map;
     }
 
     @Override

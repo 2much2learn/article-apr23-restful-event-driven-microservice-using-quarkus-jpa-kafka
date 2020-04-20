@@ -3,18 +3,14 @@ package com.toomuch2learn.crud.catalogue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.toomuch2learn.crud.catalogue.config.KafkaResource;
+import com.toomuch2learn.crud.catalogue.config.KafkaTestResource;
 import com.toomuch2learn.crud.catalogue.error.Error;
 import com.toomuch2learn.crud.catalogue.model.CatalogueItem;
-import com.toomuch2learn.crud.catalogue.model.Category;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.DisabledOnNativeImage;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,14 +19,12 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @QuarkusTest
-@QuarkusTestResource(KafkaResource.class)
+@QuarkusTestResource(KafkaTestResource.class)
 @DisabledOnNativeImage
-public class RestAssuredCatalogueCRUDTest {
+public class RestAssuredCatalogueCRUDTest extends BaseTest {
 
     @BeforeEach
     public void setURL() {
@@ -251,42 +245,5 @@ public class RestAssuredCatalogueCRUDTest {
         catch(Exception e) {
             fail("Error occurred while testing invalid request", e);
         }
-    }
-
-    private ResponseSpecification prepareResponseSpec(int responseStatus) {
-        return new ResponseSpecBuilder()
-            .expectStatusCode(responseStatus)
-            .build();
-    }
-
-    private Response postCreateCatalogueItem(CatalogueItem catalogueItem) throws Exception {
-        RequestSpecification request
-            = given()
-                .contentType("application/json")
-                .body(catalogueItem);
-
-        return request.post("/");
-    }
-
-    final Random random = new Random();
-    private String prepareRandomSKUNumber() {
-        return "SKUNUMBER-"+
-            random.ints(1000, 9999)
-                .findFirst()
-                .getAsInt();
-    }
-
-    private CatalogueItem prepareCatalogueItem(String skuNumber) {
-        CatalogueItem item
-            = CatalogueItem.of(
-                skuNumber,
-                "Catalog Item -"+skuNumber,
-                "Catalog Desc - "+skuNumber,
-                Category.BOOKS.getValue(),
-                10.00,
-                10,
-                new Date()
-        );
-        return item;
     }
 }

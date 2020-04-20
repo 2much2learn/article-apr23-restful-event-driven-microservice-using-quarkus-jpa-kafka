@@ -33,6 +33,8 @@ quarkus:
         level: WARN
       "io.quarkus":
         level: INFO
+      "org.apache.kafka":
+        level: ERROR
 
     # Send logs to Graylog
     handler:
@@ -79,8 +81,16 @@ mp:
     # Datasource configuration
     datasource:
       db-kind: postgresql
-      url: jdbc:tc:postgresql:latest:///cataloguedb
+      jdbc:
+        driver: org.testcontainers.jdbc.ContainerDatabaseDriver
+        url: jdbc:tc:postgresql:latest:///cataloguedb
     hibernate-orm:
       dialect: org.hibernate.dialect.PostgreSQL9Dialect
       database:
         generation: drop-and-create
+
+    # Logging configuration
+    log:
+      handler:
+        gelf:
+          enabled: false
