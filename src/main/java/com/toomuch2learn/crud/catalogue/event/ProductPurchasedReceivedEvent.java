@@ -6,7 +6,6 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -20,7 +19,7 @@ public class ProductPurchasedReceivedEvent {
     @Inject
     CatalogueCrudService catalogueCrudService;
 
-    ExecutorService executor;
+    private ExecutorService executor;
     private BlockingQueue<String> messages;
 
     void startup(@Observes StartupEvent event) {

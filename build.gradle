@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+	id 'jacoco'
+	id "io.freefair.lombok" version "5.0.0-rc2"
+}
+
+repositories {
+     mavenLocal()
+     mavenCentral()
+}
+
+dependencies {
+    
+	implementation 'org.projectlombok:lombok:1.18.12'
+	
+	implementation 'io.quarkus:quarkus-config-yaml'
+	implementation 'io.quarkus:quarkus-smallrye-health'
+    implementation 'io.quarkus:quarkus-smallrye-metrics'
+	implementation 'io.quarkus:quarkus-logging-gelf'
+	implementation 'io.quarkus:quarkus-smallrye-opentracing'
+	implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-kafka'
+	
+    implementation 'io.quarkus:quarkus-resteasy'
+	implementation 'io.quarkus:quarkus-resteasy-jackson'
+    
+	implementation 'io.quarkus:quarkus-jdbc-postgresql'
+	implementation 'io.quarkus:quarkus-hibernate-orm-panache'
+    implementation 'io.quarkus:quarkus-hibernate-validator'
+    
+	implementation 'io.opentracing.contrib:opentracing-jdbc'
+	
+	implementation 'org.apache.commons:commons-lang3:3.10'
+    
+	implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    
+	testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+	
+	testImplementation 'org.testcontainers:testcontainers:1.13.0'
+	testImplementation 'org.testcontainers:postgresql:1.13.0'
+	testImplementation 'org.testcontainers:kafka:1.13.0'
+}
+
+group 'com.toomuch2learn'
+version '1.0.0-SNAPSHOT'
+
+group 'com.toomuch2learn'
+version '1.0.0-SNAPSHOT'
+description 'crud-catalogue'
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jacocoTestReport {
+    reports {
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+

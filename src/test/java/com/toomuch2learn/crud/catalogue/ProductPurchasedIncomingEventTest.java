@@ -50,10 +50,14 @@ public class ProductPurchasedIncomingEventTest extends BaseTest{
             CatalogueItem catalogueItem = prepareCatalogueItem(sku);
             postCreateCatalogueItem(catalogueItem);
 
-            log.info(String.format("===> Producing product purchased event for %s", sku));
-            Producer<String, String> consumer = createProducer();
-            consumer.send(new ProducerRecord<>("product-purchased", "testcontainers", sku));
+            // Wait for 10 seconds before publishing the message for the cluster to startup properly
+            Thread.sleep(10000);
 
+            log.info(String.format("===> Producing product purchased event for %s", sku));
+            Producer<String, String> producer = createProducer();
+            producer.send(new ProducerRecord<>("product-purchased", "testcontainers", sku));
+
+            // Wait for 10 seconds for the message to be handled by the application
             Thread.sleep(10000);
 
             log.info(String.format("===> Invocking get request for ", sku));

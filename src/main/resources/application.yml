@@ -59,7 +59,6 @@ quarkus:
       -H:ReflectionConfigurationFiles=reflection-config.json
 
 # Kafka Messages
-# Configure the Kafka sink (we write to it)
 mp:
   messaging:
     outgoing:

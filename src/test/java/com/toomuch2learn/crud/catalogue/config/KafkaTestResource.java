@@ -3,7 +3,6 @@ package com.toomuch2learn.crud.catalogue.config;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import org.testcontainers.containers.KafkaContainer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
