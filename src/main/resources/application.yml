@@ -4,6 +4,10 @@ quarkus:
   banner:
     path: banner.txt
 
+  # Enable to apply CORS filter
+  http:
+    cors: true
+
   # Datasource configuration
   datasource:
     db-kind: postgresql
